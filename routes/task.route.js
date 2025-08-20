@@ -1,5 +1,5 @@
 const express = require('express');
-const { authentication } = require('../auth.middleware/auth.middleware.js');
+const authentication = require('../auth.middleware/auth.middleware.js');
 const {
   createTask,
   getTasks,

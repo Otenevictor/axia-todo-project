@@ -29,11 +29,7 @@ const userSchema = new mongoose.Schema({
         required: true
         
     },
-    isAdmin: {
-        type: Boolean, 
-        default: false,
-        // required: true // Make password a required field
-    }
+   
  
 }, { timestamps: true });
 
