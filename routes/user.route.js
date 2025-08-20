@@ -2,7 +2,7 @@ const express = require('express');
 const { authentication, adminAuth } = require('../auth.middleware/auth.middleware.js');
 const { createUser, loginUser, getAllUsers,  updateUser, deleteUser } = require('../controllers/user.controller.js');
 const route = express.Router(); // Create an Express Router instance
-const upload = require('../utils/multer.js'); 
+// const upload = require('../utils/multer.js'); 
 
 
 
