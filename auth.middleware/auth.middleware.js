@@ -36,6 +36,19 @@ const authentication = async (req, res, next) => {
     }
 };
 
+// Admin authorization middleware
+const adminAuth = (req, res, next) => {
+    // Check if user exists (should be set by authentication middleware)
+    if (!req.user) {
+        return res.status(401).json({ message: "Authentication required" });
+    }
+    
+    // Check admin privileges
+    if (!req.user.isAdmin) {
+        return res.status(403).json({ message: "Access denied. Admin privileges required." });
+    }
+    
+    next();
+};
 
-
-module.exports =  authentication ;
+module.exports = { authentication, adminAuth };

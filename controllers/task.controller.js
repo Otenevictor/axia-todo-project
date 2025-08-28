@@ -9,12 +9,25 @@ const createTask = async (req, res) => {
       return res.status(400).json({ message: 'Title is required.' });
     }
 
+    let finalDueDate = null;
+
+    if (dueDate) {
+      // User sends only "YYYY-MM-DD"
+      const parsed = new Date(dueDate);
+      if (!isNaN(parsed.getTime())) {
+        // Grab current time (hours/minutes/seconds/ms)
+        const now = new Date();
+        parsed.setHours(now.getHours(), now.getMinutes(), now.getSeconds(), now.getMilliseconds());
+        finalDueDate = parsed;
+      }
+    }
+
     const task = await Task.create({
       user: req.user.id,
       title: title.trim(),
       description: description?.trim() || '',
       category: category?.trim() || 'general',
-      dueDate: dueDate ? new Date(dueDate) : null,
+      dueDate: finalDueDate,
       completed: !!completed,
       priority: priority || 'medium',
     });
@@ -25,6 +38,7 @@ const createTask = async (req, res) => {
     return res.status(500).json({ message: 'Something went wrong while creating the task.' });
   }
 };
+
 
 // Get tasks (user-specific) + filtering/pagination/sorting
 const getTasks = async (req, res) => {
